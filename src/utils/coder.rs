@@ -1,6 +1,7 @@
 use bincode;
+use crypto::digest::Digest;
+use crypto::sha3::Sha3;
 use serde::{Deserialize, Serialize};
-
 pub fn my_serialize<T: ?Sized>(value: &T) -> bincode::Result<Vec<u8>>
 where
     T: Serialize,
@@ -15,6 +16,12 @@ where
 {
     let deserialized = bincode::deserialize(bytes).unwrap();
     Ok(deserialized)
+}
+
+pub fn get_hash(value: &[u8]) -> String {
+    let mut hasher = Sha3::Sha3_256();
+    hasher.input(value);
+    hasher.result_str()
 }
 
 #[cfg(test)]
