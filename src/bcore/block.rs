@@ -1,12 +1,14 @@
 use chrono::prelude::*;
 
 use crate::utils::coder::{get_hash, my_serialize};
-
+#[derive(Debug)]
 pub struct BlockHeader {
     pub time: i64,
     pub tx_hash: String,
     pub pre_hash: String,
 }
+#[derive(Debug)]
+
 pub struct Block {
     pub header: BlockHeader,
     pub hash: String,
