@@ -10,7 +10,7 @@ where
     Ok(serialized)
 }
 
-pub fn my_deserialzie<'a, T>(bytes: &'a [u8]) -> bincode::Result<T>
+pub fn my_deserialize<'a, T>(bytes: &'a [u8]) -> bincode::Result<T>
 where
     T: Deserialize<'a>,
 {
@@ -19,7 +19,7 @@ where
 }
 
 pub fn get_hash(value: &[u8]) -> String {
-    let mut hasher = Sha3::Sha3_256();
+    let mut hasher = Sha3::sha3_256();
     hasher.input(value);
     hasher.result_str()
 }

@@ -1,6 +1,6 @@
 use chrono::prelude::*;
 
-use crate::utils::coder::my_serialize;
+use crate::utils::coder::{get_hash, my_serialize};
 
 pub struct BlockHeader {
     pub time: i64,
@@ -14,9 +14,21 @@ pub struct Block {
 }
 
 impl Block {
-    fn set_hash(&mut self) {
-        self.header.time = Utc::now().timestamp();
-        let header = my_serialize(&self.header.time).unwrap();
-        self.hash = get
+    pub fn new(data: String, pre_hash: String) -> Block {
+        let time = Utc::now().timestamp();
+        let transactions = my_serialize(&data).unwrap();
+        let tx_hash = get_hash(&transactions[..]);
+        let hash = get_hash(&my_serialize(&time).unwrap());
+
+        let block = Block {
+            header: BlockHeader {
+                time: time,
+                tx_hash: tx_hash,
+                pre_hash: pre_hash,
+            },
+            hash: hash,
+            data: data,
+        };
+        block
     }
 }
